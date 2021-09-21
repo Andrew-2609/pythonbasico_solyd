@@ -1,4 +1,5 @@
 from veiculo import Veiculo
+from carro import Carro
 
 caminhao_rosa = Veiculo("rosa", 8, "ford", 10)
 
@@ -8,7 +9,7 @@ print("CAMINHÃO ROSA\n",
 
 print("")
 
-carro_azul = Veiculo("azul", 4, "bmw", 30)
+carro_azul = Carro("azul", "bmw", 30)
 
 print("CARRO AZUL\n",
       f"Cor: {carro_azul.cor}, número de rodas: {carro_azul.rodas},"
