@@ -18,7 +18,7 @@ def clonar_pagina_principal():
         print(f"Não foi possível fazer requisição no endereço {endereco}. Erro: {err}")
 
 
-def requisicao_get(endereco, cabecalhos, cookies):
+def requisicao_get(endereco, cabecalhos=None, cookies=None):
     requisicao = None
 
     try:
