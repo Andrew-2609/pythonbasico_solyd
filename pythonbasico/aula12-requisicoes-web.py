@@ -28,13 +28,36 @@ def requisicao_get(endereco, cabecalhos=None, cookies=None):
         print(f"Não foi possível realizar a requisição para {requisicao}. Erro: {err}")
 
 
+def requisicao_post(endereco, dados, cabecalhos=None, cookies=None):
+    requisicao = None
+
+    try:
+        requisicao = requests.post(endereco, data=dados, headers=cabecalhos, cookies=cookies)
+        return requisicao.text
+    except Exception as err:
+        print(f"Não foi possível realizar a requisição para {requisicao}. Erro: {err}")
+
+
 if __name__ == '__main__':
     meus_cabecalhos = {"user-agent": "Windows 15"}
     meus_cookies = {"ultima-visita": str(datetime.datetime.now())}
-    endereco_requisicao = input("Digite um endereço para fazer a requisição GET: ")
+    endereco_requisicao = input("Digite um endereço para fazer as requisições: ")
 
-    resposta = requisicao_get(endereco_requisicao, meus_cabecalhos, meus_cookies)
+    usuario = input("Digite um usuário para a requisição POST: ")
+    senha = input("Digite uma senha para fazer a requisição POST: ")
 
-    print(resposta)
+    meus_dados = {
+        "usuario": usuario,
+        "senha": senha
+    }
 
-    print("\n\n", "#" * 7, "Fim da execução", "#" * 7)
+    resposta_get = requisicao_get(endereco_requisicao, meus_cabecalhos, meus_cookies)
+    resposta_post = requisicao_post(endereco_requisicao, meus_dados, meus_cabecalhos)
+
+    print("\n### RESPOSTA GET ###")
+    print(resposta_get)
+
+    print("\n### RESPOSTA POST ###")
+    print(resposta_post)
+
+    print("\n", "#" * 7, "Fim da execução", "#" * 7)
