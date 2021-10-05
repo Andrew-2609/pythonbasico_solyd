@@ -1,19 +1,27 @@
 import requests
+import json
 
-apiKey = None
 
-try:
-    apiKey = open("apiKey.txt").read()
-except Exception as err:
-    print("Couldn't read the file. Error:", err)
-    exit()
+def carregar_api_key():
+    try:
+        api_key = open("apiKey.txt").read()
+        return api_key
+    except Exception as err:
+        print("Couldn't read the file. Error:", err)
+        exit()
 
-req = None
 
-try:
-    req = requests.get(f"https://www.omdbapi.com/?t=Interstellar&apikey={apiKey}")
-except Exception as err:
-    print("Connection error:", err)
-    exit()
+def retornar_dados_do_filme(titulo):
+    try:
+        req = requests.get(f"https://www.omdbapi.com/?t={titulo}&apikey={carregar_api_key()}")
+        return req
+    except Exception as err:
+        print("Connection error:", err)
+        exit()
 
-print(req.text)
+
+filme = input("De qual filme você deseja saber os dados? Informe: ")
+
+dicionario = json.loads(retornar_dados_do_filme(filme).text)
+
+print(dicionario)
