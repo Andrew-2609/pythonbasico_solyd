@@ -4,7 +4,7 @@ import json
 
 def carregar_api_key():
     try:
-        api_key = open("apiKey.txt").read()
+        api_key = json.load(open("apiKey.json"))["api-filmes"]
         return api_key
     except Exception as err:
         print("Couldn't read the file. Error:", err)
