@@ -78,7 +78,14 @@ def criar_novo_tweet(mensagem):
 
 
 if __name__ == '__main__':
-    # tweets = definir_query_e_retornar_tweets()
-    # formatar_e_exibir_tweets(tweets)
-    msg = input("Digite uma mensagem para o seu tweet: ")
-    criar_novo_tweet(msg)
+    print("Bem-vindo a minha implementação básica da Twitter API!")
+    opcao = input("Escolha uma opção (0 - Pesquisar tweets | 1 - Criar novo tweet): ")
+
+    if opcao == '0':
+        tweets = definir_query_e_retornar_tweets()
+        formatar_e_exibir_tweets(tweets)
+    elif opcao == '1':
+        msg = input("Digite uma mensagem para o seu tweet: ")
+        criar_novo_tweet(msg)
+    else:
+        print("Opção inválida, encerrando o programa...")
