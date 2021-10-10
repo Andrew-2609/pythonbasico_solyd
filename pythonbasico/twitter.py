@@ -18,3 +18,13 @@ class Twitter:
         corpo_decodificado = corpo_resposta.decode()
         corpo_dict = json.loads(corpo_decodificado)
         return corpo_dict
+
+    def search_tweets(self, palavra_chave, idioma=' '):
+        base_url = "https://api.twitter.com/1.1/search/tweets.json"
+
+        palavra_chave = urllib.parse.quote(palavra_chave)
+
+        corpo_resposta = self.client.request(f"{base_url}?q={palavra_chave}&lang={idioma}")[1]
+        corpo_decodificado = corpo_resposta.decode()
+        corpo_dict = json.loads(corpo_decodificado)
+        return corpo_dict
