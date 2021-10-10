@@ -4,23 +4,21 @@ from datetime import datetime
 
 import oauth2
 
+from apikey import ApiKey
+
 
 def realizar_autorizacao_retornar_client():
-    try:
-        api_key = json.load(open("apiKey.json"))
-    except Exception as err:
-        print("Ocorreu um erro ao abrir o arquivo:", err)
-    else:
-        consumer_key = api_key['consumer_key']
-        consumer_secret = api_key['consumer_secret']
-        access_token = api_key['access_token']
-        access_token_secret = api_key['access_token_secret']
+    api_key = ApiKey.return_api_key_file()
+    consumer_key = api_key['consumer_key']
+    consumer_secret = api_key['consumer_secret']
+    access_token = api_key['access_token']
+    access_token_secret = api_key['access_token_secret']
 
-        consumer = oauth2.Consumer(consumer_key, consumer_secret)
-        token = oauth2.Token(access_token, access_token_secret)
+    consumer = oauth2.Consumer(consumer_key, consumer_secret)
+    token = oauth2.Token(access_token, access_token_secret)
 
-        client = oauth2.Client(consumer, token)
-        return client
+    client = oauth2.Client(consumer, token)
+    return client
 
 
 def retornar_corpo_de_tweets(palavra_chave):
