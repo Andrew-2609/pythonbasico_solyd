@@ -1,3 +1,6 @@
+import json
+import urllib.parse
+
 import oauth2
 
 
@@ -6,3 +9,12 @@ class Twitter:
         self.token = oauth2.Token(access_token, access_token_secret)
         self.consumer = oauth2.Consumer(consumer_key, consumer_secret)
         self.client = oauth2.Client(self.consumer, self.token)
+
+    def tweet(self, mensagem):
+        base_url = "https://api.twitter.com/1.1/statuses/update.json"
+        mensagem = urllib.parse.quote(mensagem)
+
+        corpo_resposta = self.client.request(f"{base_url}?status={mensagem}", method="POST")[1]
+        corpo_decodificado = corpo_resposta.decode()
+        corpo_dict = json.loads(corpo_decodificado)
+        return corpo_dict
