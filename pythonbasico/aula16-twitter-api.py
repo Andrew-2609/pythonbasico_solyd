@@ -27,6 +27,8 @@ def retornar_corpo_de_tweets(palavra_chave):
     res_client = realizar_autorizacao_retornar_client()
     base_url = "https://api.twitter.com/1.1/search/tweets.json"
 
+    palavra_chave = urllib.parse.quote(palavra_chave)
+
     corpo_resposta = res_client.request(f"{base_url}?q={palavra_chave}")[1]
     corpo_decodificado = corpo_resposta.decode()
     corpo_dict = json.loads(corpo_decodificado)
@@ -34,7 +36,7 @@ def retornar_corpo_de_tweets(palavra_chave):
 
 
 def definir_query_e_retornar_tweets():
-    query = urllib.parse.quote(input("Por favor, diga o que você deseja pesquisar no Twitter: "))
+    query = input("Por favor, diga o que você deseja pesquisar no Twitter: ")
     resultados = retornar_corpo_de_tweets(query)['statuses']
     return resultados
 
