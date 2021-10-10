@@ -1,6 +1,6 @@
-import oauth2
 import json
-import pprint
+
+import oauth2
 
 
 def realizar_autorizacao_retornar_client():
@@ -31,5 +31,20 @@ def retornar_corpo_de_tweets(palavra_chave):
     return corpo_dict
 
 
+def definir_query_e_retornar_tweets():
+    query = input("Por favor, diga o que você deseja pesquisar no Twitter: ")
+    resultados = retornar_corpo_de_tweets(query)['statuses']
+    return resultados
+
+
+def formatar_e_exibir_tweets(lista_tweets):
+    print("\n### Resultados")
+    for tweet in lista_tweets:
+        print(f"----\nUsuário: @{tweet['user']['screen_name']}")
+        print(f"\tTweet: {tweet['text']}\n")
+    print("### Fim")
+
+
 if __name__ == '__main__':
-    pprint.pprint(retornar_corpo_de_tweets("brasil"))
+    tweets = definir_query_e_retornar_tweets()
+    formatar_e_exibir_tweets(tweets)
