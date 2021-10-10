@@ -1,14 +1,8 @@
+from apikey import ApiKey
 from twitter import Twitter
-import json
 
 if __name__ == '__main__':
-    api_key = None
-    try:
-        api_key = json.load(open("apiKey.json"))
-    except Exception as err:
-        print("Ocorreu um erro ao abrir o arquivo:", err)
-        exit()
-
+    api_key = ApiKey.return_api_key_file()
     consumer_key = api_key['consumer_key']
     consumer_secret = api_key['consumer_secret']
     access_token = api_key['access_token']
