@@ -1,5 +1,6 @@
 import json
 import urllib.parse
+from datetime import datetime
 
 import oauth2
 
@@ -46,6 +47,38 @@ def formatar_e_exibir_tweets(lista_tweets):
     print("### Fim")
 
 
+def formatar_data_novo_tweet(data):
+    data_simplificada = str(data).split(" +")[0]
+    formato_data_twitter = "%a %b %d %H:%M:%S"
+    formato_data_convertido = f"%d/%m/{datetime.now().year} %H:%M:%S"
+
+    data_convertida = datetime.strptime(data_simplificada, formato_data_twitter).strftime(formato_data_convertido)
+    return data_convertida
+
+
+def criar_novo_tweet(mensagem):
+    res_client = realizar_autorizacao_retornar_client()
+    base_url = "https://api.twitter.com/1.1/statuses/update.json"
+    mensagem = urllib.parse.quote(mensagem)
+
+    corpo_resposta = res_client.request(f"{base_url}?status={mensagem}", method="POST")[1]
+    corpo_decodificado = corpo_resposta.decode()
+    corpo_dict = json.loads(corpo_decodificado)
+
+    if corpo_dict.get('created_at'):
+        data_e_hora_tweet = formatar_data_novo_tweet(corpo_dict['created_at'])
+        print("\n ### O tweet foi feito com sucesso. Segue abaixo:")
+        print(f"\tUsuário: @{corpo_dict['user']['screen_name']}")
+        print(f"\tTweet: {corpo_dict['text']}")
+        print(f"\tData e hora (UTC): {data_e_hora_tweet}")
+    else:
+        print("\n ### Ocorreu um problema. Objeto retornado:")
+        print(corpo_dict)
+    print("###\n")
+
+
 if __name__ == '__main__':
-    tweets = definir_query_e_retornar_tweets()
-    formatar_e_exibir_tweets(tweets)
+    # tweets = definir_query_e_retornar_tweets()
+    # formatar_e_exibir_tweets(tweets)
+    msg = input("Digite uma mensagem para o seu tweet: ")
+    criar_novo_tweet(msg)
