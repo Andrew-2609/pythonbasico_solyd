@@ -1,14 +1,15 @@
 import requests
 import json
 import datetime as dt
+from apikey import ApiKey
 
-apiKey = json.load(open("apiKey.json"))["api-clima"]
+api_key = ApiKey.return_api_key_file().get("api-clima")
 
 
 def buscar_informacoes_climaticas(cidade):
     try:
         req = requests.get(
-            f"https://api.openweathermap.org/data/2.5/weather?q={cidade}&appid={apiKey}&units=metric&lang=pt_br")
+            f"https://api.openweathermap.org/data/2.5/weather?q={cidade}&appid={api_key}&units=metric&lang=pt_br")
         return json.loads(req.text)
     except Exception as err:
         print(f"Falha na requisição. Erro: {err}")
@@ -17,7 +18,7 @@ def buscar_informacoes_climaticas(cidade):
 
 def organizar_e_mostrar_resposta(res):
     print("\n###")
-    if not res['message']:
+    if not res.get("message"):
         horario_nascer_sol = dt.datetime.utcfromtimestamp(int(res['sys']['sunrise'])).strftime('%H:%M:%S')
         horario_por_sol = dt.datetime.utcfromtimestamp(int(res['sys']['sunset'])).strftime('%H:%M:%S')
         print("Nome oficial da cidade:", res['name'])
