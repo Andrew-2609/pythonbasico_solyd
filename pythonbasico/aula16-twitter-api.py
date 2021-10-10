@@ -17,5 +17,8 @@ else:
 
     client = oauth2.Client(consumer, token)
 
-    req = client.request(f"{base_url}?brasil")
-    print(req)
+    req = client.request(f"{base_url}?q=brasil")[1]
+    req_decode = req.decode()
+    req_obj = json.loads(req_decode)
+
+    print(req_obj)
