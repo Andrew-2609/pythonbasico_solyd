@@ -1,4 +1,5 @@
 import json
+import urllib.parse
 
 import oauth2
 
@@ -32,7 +33,7 @@ def retornar_corpo_de_tweets(palavra_chave):
 
 
 def definir_query_e_retornar_tweets():
-    query = input("Por favor, diga o que você deseja pesquisar no Twitter: ")
+    query = urllib.parse.quote(input("Por favor, diga o que você deseja pesquisar no Twitter: "))
     resultados = retornar_corpo_de_tweets(query)['statuses']
     return resultados
 
