@@ -1,19 +1,13 @@
 import requests
 import json
+from apikey import ApiKey
 
-
-def carregar_api_key():
-    try:
-        api_key = json.load(open("apiKey.json"))["api-filmes"]
-        return api_key
-    except Exception as err:
-        print("Couldn't read the file. Error:", err)
-        exit()
+api_key = ApiKey.return_api_key_file().get("api-filmes")
 
 
 def retornar_dados_do_filme(titulo):
     try:
-        req = requests.get(f"https://www.omdbapi.com/?t={titulo}&apikey={carregar_api_key()}&type=movie")
+        req = requests.get(f"https://www.omdbapi.com/?t={titulo}&apikey={api_key}&type=movie")
         dict_filme = json.loads(req.text)
         return dict_filme
     except Exception as err:
@@ -23,7 +17,7 @@ def retornar_dados_do_filme(titulo):
 
 def retornar_lista_de_filmes(titulo):
     try:
-        req = requests.get(f"https://www.omdbapi.com/?s={titulo}&apikey={carregar_api_key()}&type=movie")
+        req = requests.get(f"https://www.omdbapi.com/?s={titulo}&apikey={api_key}&type=movie")
         dict_filme = json.loads(req.text)
         return dict_filme['Search']
     except Exception as err:
